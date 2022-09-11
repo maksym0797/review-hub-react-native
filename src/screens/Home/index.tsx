@@ -1,16 +1,27 @@
-import React, {PropsWithChildren} from 'react';
-import {Text, View} from 'react-native';
-const Home: React.FC<
-  PropsWithChildren<{
-    title: string;
-  }>
-> = ({children, title}) => {
+import React from 'react';
+import {Pressable, Text, View} from 'react-native';
+import {Dispatch, RootState} from '../../store';
+import {connect, ConnectedProps} from 'react-redux';
+
+const mapState = (state: RootState) => ({});
+
+const mapDispatch = (dispatch: Dispatch) => ({
+  logOut: dispatch.authorization.logOut,
+});
+
+const connector = connect(mapState, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+interface ScreenProps extends PropsFromRedux {}
+const Home: React.FC<ScreenProps> = ({logOut}) => {
   return (
     <View>
-      <Text>{title}</Text>
-      <Text>{children}</Text>
+      <Pressable onPress={logOut}>
+        <Text>Log out</Text>
+      </Pressable>
     </View>
   );
 };
 
-export default Home;
+export default connector(Home);

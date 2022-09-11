@@ -1,0 +1,1 @@
+export const CREDENTIALS_KEY = 'AUTH_SERVER';
